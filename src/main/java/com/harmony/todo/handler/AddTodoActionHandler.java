@@ -48,4 +48,5 @@ public class AddTodoActionHandler extends AbstractActionHandler {
     protected UserService getUserService() {
         return userService;
     }
+
 }

@@ -2,6 +2,7 @@ package com.harmony.todo.config;
 
 import com.harmony.todo.dingtalk.DingtalkActionDispatcher;
 import com.harmony.todo.dingtalk.DingtalkActionHandler;
+import com.harmony.todo.dingtalk.DingtalkOptions;
 import com.harmony.todo.dingtalk.Options;
 import com.harmony.todo.dingtalk.action.ActionParser;
 import org.springframework.beans.factory.ObjectProvider;
@@ -18,11 +19,17 @@ public class DingtalkConfig {
 
     @Bean
     public ActionParser actionParser() {
-        ActionParser parser = new ActionParser();
-        parser.addActionOptions(Options.addAction());
-        parser.addActionOptions(Options.deleteAction());
-        parser.addActionOptions(Options.listAction());
-        return parser;
+        return new ActionParser(dingtalkOptions());
+    }
+
+    @Bean
+    public DingtalkOptions dingtalkOptions() {
+        return DingtalkOptions.of(
+                Options.addAction(),
+                Options.deleteAction(),
+                Options.listAction(),
+                Options.helpAction()
+        );
     }
 
 }

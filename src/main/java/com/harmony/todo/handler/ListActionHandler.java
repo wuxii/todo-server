@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 import java.util.Iterator;
 
 @Component
-public class ListTodoActionHandler extends AbstractActionHandler implements DingtalkActionHandler {
+public class ListActionHandler extends AbstractActionHandler implements DingtalkActionHandler {
 
     private final TodoService todoService;
 
@@ -25,7 +25,7 @@ public class ListTodoActionHandler extends AbstractActionHandler implements Ding
 
     private final UserService userService;
 
-    public ListTodoActionHandler(UserService userService, TodoService todoService, DateFormatter dateFormatter) {
+    public ListActionHandler(UserService userService, TodoService todoService, DateFormatter dateFormatter) {
         super("list");
         this.userService = userService;
         this.todoService = todoService;

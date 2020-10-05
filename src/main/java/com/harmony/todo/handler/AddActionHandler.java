@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class AddTodoActionHandler extends AbstractActionHandler {
+public class AddActionHandler extends AbstractActionHandler {
 
     private final TodoService todoService;
 
@@ -23,7 +23,7 @@ public class AddTodoActionHandler extends AbstractActionHandler {
 
     private final UserService userService;
 
-    public AddTodoActionHandler(UserService userService, TodoService todoService, DateFormatter dateFormatter) {
+    public AddActionHandler(UserService userService, TodoService todoService, DateFormatter dateFormatter) {
         super("add");
         this.todoService = todoService;
         this.dateFormatter = dateFormatter;
@@ -62,10 +62,10 @@ public class AddTodoActionHandler extends AbstractActionHandler {
         List<DingtalkResponseActionCardButton> buttons = new ArrayList<>();
         buttons.add(new DingtalkResponseActionCardButton()
                 .setTitle("完成")
-                .setActionUrl("https://www.dingtalk.com/"));
+                .setSingleUrl("https://www.dingtalk.com/"));
         buttons.add(new DingtalkResponseActionCardButton()
                 .setTitle("取消")
-                .setActionUrl("https://www.dingtalk.com/"));
+                .setSingleUrl("https://www.dingtalk.com/"));
         return buttons;
     }
 

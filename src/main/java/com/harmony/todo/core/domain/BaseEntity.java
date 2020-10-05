@@ -28,4 +28,6 @@ public abstract class BaseEntity extends AbstractPersistable<Long> {
 
     protected Date updatedUsername;
 
+    protected boolean deleted;
+
 }

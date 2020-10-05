@@ -6,30 +6,32 @@ import com.harmony.todo.domain.Todo;
 import com.harmony.todo.domain.User;
 import com.harmony.todo.service.TodoService;
 import com.harmony.todo.service.UserService;
-
-import java.util.Date;
+import org.springframework.stereotype.Component;
 
 import static com.harmony.todo.utils.OptionsUtils.getShortId;
 
-public class DoneActionHandler extends AbstractActionHandler {
+@Component
+public class DeleteActionHandler extends AbstractActionHandler {
 
-    private final UserService userService;
     private final TodoService todoService;
+    private final UserService userService;
 
-    protected DoneActionHandler(UserService userService, TodoService todoService) {
-        super("done");
-        this.userService = userService;
+    public DeleteActionHandler(TodoService todoService, UserService userService) {
+        super("delete");
         this.todoService = todoService;
+        this.userService = userService;
     }
 
     @Override
     public DingtalkResponse handle(DingtalkAction action) {
         User user = getActionUser(action);
         Long shortId = getShortId(action);
+
         Todo todo = todoService.findTodoByShortId(shortId, user.getId());
-        todo.setDone(true);
-        todo.setDoneAt(new Date());
-        return DingtalkResponse.text("#" + shortId + " done");
+        todo.setDeleted(true);
+        todoService.save(todo);
+
+        return DingtalkResponse.text("#" + todo.getShortId() + " deleted");
     }
 
     @Override

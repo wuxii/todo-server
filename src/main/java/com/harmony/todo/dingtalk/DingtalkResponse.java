@@ -64,6 +64,8 @@ public class DingtalkResponse {
         private String title;
         @JsonProperty("actionURL")
         private String actionUrl;
+        @JsonProperty("singleURL")
+        private String singleUrl;
     }
 
     @Data

@@ -12,6 +12,7 @@ import org.springframework.util.Assert;
 public abstract class AbstractActionHandler implements DingtalkActionHandler {
 
     protected final String action;
+    protected boolean allowUserNotFound;
 
     protected AbstractActionHandler(String action) {
         Assert.notNull(action, "action not allow null");
@@ -34,7 +35,11 @@ public abstract class AbstractActionHandler implements DingtalkActionHandler {
                 .setNickname(nickname)
                 .setAccountType(UserAccount.TYPE_OF_DINGTALK)
                 .setAccount(senderId);
-        return getUserService().findOrCreateUserByAccount(request);
+        User user = getUserService().findOrCreateUserByAccount(request);
+        if (user == null && !allowUserNotFound) {
+            throw new IllegalStateException("user not found");
+        }
+        return user;
     }
 
 }

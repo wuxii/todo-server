@@ -27,6 +27,10 @@ public class DingtalkResponse {
         return new DingtalkResponse().setMsgtype("actionCard");
     }
 
+    public static DingtalkResponse markdown() {
+        return new DingtalkResponse().setMsgtype("markdown");
+    }
+
     private String msgtype;
     private DingtalkResponseText text;
     private DingtalkResponseMarkdown markdown;

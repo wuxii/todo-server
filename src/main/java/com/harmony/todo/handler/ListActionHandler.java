@@ -48,17 +48,25 @@ public class ListActionHandler extends AbstractActionHandler implements Dingtalk
         return DingtalkResponse.text(toTodoListText(todos));
     }
 
+
+    private DingtalkResponse buildDingtalkResponse(TodoList todos) {
+        return null;
+    }
+
     private String toTodoListText(TodoList todos) {
         StringBuilder o = new StringBuilder();
-        o.append("TODO List:\n");
+        o.append("# TODO List:\n");
+        if (todos.isEmpty()) {
+            return o.append("no data").toString();
+        }
         Iterator<Todo> it = todos.iterator();
         for (; it.hasNext(); ) {
             Todo todo = it.next();
-            o.append("\t#").append(todo.getShortId()).append(" ").append(todo.getTitle());
-            if (it.hasNext()) {
-                o.append("\n");
-            }
+            o.append("##").append(" #").append(todo.getShortId()).append(" ").append(todo.getTitle());
+            o.append("\t").append(todo.getMessage());
+            o.append("\n");
         }
+        o.append("total size: ").append(todos.getTotal());
         return o.toString();
     }
 

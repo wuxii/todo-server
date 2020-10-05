@@ -6,11 +6,13 @@ import com.harmony.todo.domain.Todo;
 import com.harmony.todo.domain.User;
 import com.harmony.todo.service.TodoService;
 import com.harmony.todo.service.UserService;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
 import static com.harmony.todo.utils.OptionsUtils.getShortId;
 
+@Component
 public class DoneActionHandler extends AbstractActionHandler {
 
     private final UserService userService;

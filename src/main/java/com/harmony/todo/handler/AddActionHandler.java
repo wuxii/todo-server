@@ -2,8 +2,8 @@ package com.harmony.todo.handler;
 
 import com.harmony.todo.dingtalk.DingtalkAction;
 import com.harmony.todo.dingtalk.DingtalkResponse;
-import com.harmony.todo.dingtalk.DingtalkResponse.DingtalkResponseActionCard;
 import com.harmony.todo.dingtalk.DingtalkResponse.DingtalkResponseActionCardButton;
+import com.harmony.todo.dingtalk.DingtalkResponse.DingtalkResponseMarkdown;
 import com.harmony.todo.domain.Todo;
 import com.harmony.todo.domain.User;
 import com.harmony.todo.service.TodoService;
@@ -45,28 +45,18 @@ public class AddActionHandler extends AbstractActionHandler {
         todo.setDone(false);
         todo.setUserId(user.getId());
         Todo savedTodo = todoService.save(todo);
-        // build response
-        DingtalkResponseActionCard actionCard =
-                new DingtalkResponseActionCard()
-                        .setTitle("#" + savedTodo.getShortId() + " " + title)
-                        .setText(message)
-                        .setButtons(generateTodoActionButtons(savedTodo))
-                        .setHideAvatar("0")
-                        .setBtnOrientation("1");
-        return DingtalkResponse
-                .actionCard()
-                .setActionCard(actionCard);
+        return buildDingtalkResponse(savedTodo);
     }
 
-    private List<DingtalkResponseActionCardButton> generateTodoActionButtons(Todo todo) {
-        List<DingtalkResponseActionCardButton> buttons = new ArrayList<>();
-        buttons.add(new DingtalkResponseActionCardButton()
-                .setTitle("完成")
-                .setSingleUrl("https://www.dingtalk.com/"));
-        buttons.add(new DingtalkResponseActionCardButton()
-                .setTitle("取消")
-                .setSingleUrl("https://www.dingtalk.com/"));
-        return buttons;
+    private DingtalkResponse buildDingtalkResponse(Todo todo) {
+        String title = "#" + todo.getShortId() + " " + todo.getTitle();
+        String message = "## " + title + "\n\n\t" + todo.getMessage();
+        DingtalkResponseMarkdown markdown = new DingtalkResponseMarkdown()
+                .setText(title)
+                .setText(message);
+        return DingtalkResponse
+                .markdown()
+                .setMarkdown(markdown);
     }
 
     @Override

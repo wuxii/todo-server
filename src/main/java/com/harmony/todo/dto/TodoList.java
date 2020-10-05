@@ -27,5 +27,9 @@ public class TodoList implements Iterable<Todo> {
         return list.iterator();
     }
 
+    public boolean isEmpty() {
+        return list.isEmpty();
+    }
+
 }
 

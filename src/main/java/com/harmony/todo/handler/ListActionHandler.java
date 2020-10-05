@@ -3,6 +3,7 @@ package com.harmony.todo.handler;
 import com.harmony.todo.dingtalk.DingtalkAction;
 import com.harmony.todo.dingtalk.DingtalkActionHandler;
 import com.harmony.todo.dingtalk.DingtalkResponse;
+import com.harmony.todo.dingtalk.DingtalkResponse.DingtalkResponseMarkdown;
 import com.harmony.todo.domain.Todo;
 import com.harmony.todo.domain.User;
 import com.harmony.todo.dto.TodoList;
@@ -44,13 +45,17 @@ public class ListActionHandler extends AbstractActionHandler implements Dingtalk
                 .setUserId(user.getId())
                 .setType(type)
                 .setDeadline(dateFormatter.parse(deadline));
-        TodoList todos = todoService.findTodos(request);
-        return DingtalkResponse.text(toTodoListText(todos));
+        return buildDingtalkResponse(todoService.findTodos(request));
     }
 
 
     private DingtalkResponse buildDingtalkResponse(TodoList todos) {
-        return null;
+        DingtalkResponseMarkdown markdown = new DingtalkResponseMarkdown();
+        markdown.setText(toTodoListText(todos));
+        markdown.setTitle("# TODO List");
+        return DingtalkResponse
+                .markdown()
+                .setMarkdown(markdown);
     }
 
     private String toTodoListText(TodoList todos) {
@@ -62,7 +67,7 @@ public class ListActionHandler extends AbstractActionHandler implements Dingtalk
         Iterator<Todo> it = todos.iterator();
         for (; it.hasNext(); ) {
             Todo todo = it.next();
-            o.append("##").append(" #").append(todo.getShortId()).append(" ").append(todo.getTitle());
+            o.append("###").append(" #").append(todo.getShortId()).append(" ").append(todo.getTitle());
             o.append("\t").append(todo.getMessage());
             o.append("\n");
         }

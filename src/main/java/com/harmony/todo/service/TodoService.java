@@ -11,4 +11,6 @@ public interface TodoService extends Service<Todo> {
 
     long nextShortId(Long userId);
 
+    Todo findTodoByShortId(Long shortId, Long userId);
+
 }

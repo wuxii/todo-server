@@ -28,7 +28,8 @@ public class DingtalkConfig {
                 Options.addAction(),
                 Options.deleteAction(),
                 Options.listAction(),
-                Options.helpAction()
+                Options.helpAction(),
+                Options.doneAction()
         );
     }
 

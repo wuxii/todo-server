@@ -18,3 +18,6 @@ spring:
     properties:
       hibernate.dialect: org.hibernate.dialect.H2Dialect
       hibernate.format_sql: true
+  jackson:
+    time-zone: Asia/Shanghai
+    default-property-inclusion: non_null

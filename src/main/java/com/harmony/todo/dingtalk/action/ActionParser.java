@@ -1,6 +1,7 @@
 package com.harmony.todo.dingtalk.action;
 
 import com.harmony.todo.dingtalk.DingtalkOptions;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.cli.ParseException;
 
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Slf4j
 public class ActionParser {
 
     private Pattern pattern = Pattern.compile("-\\w* ");
@@ -20,6 +22,7 @@ public class ActionParser {
     public ActionCommand parse(String command) {
         ActionOptions options = dingtalkOptions.findOptions(command);
         if (options == null) {
+            log.warn("unable find command action: {}", command);
             throw new IllegalArgumentException("unknown action");
         }
         try {

@@ -55,6 +55,17 @@ public class TodoServiceImpl extends ServiceSupport<Todo> implements TodoService
                 .execute(() -> findUserMaxTodoShortIdBy(userId));
     }
 
+    @Override
+    public Todo findTodoByShortId(Long shortId, Long userId) {
+        return todoRepository
+                .findOne((Specification<Todo>) (root, query, cb) -> {
+                    Path<Long> shortIdPath = root.get("shortId");
+                    Path<Long> userIdPath = root.get("userId");
+                    return cb.and(cb.equal(shortIdPath, shortId), cb.equal(userIdPath, userId));
+                })
+                .orElse(null);
+    }
+
     private long findUserMaxTodoShortIdBy(Long userId) {
         return todoRepository
                 .findOne((Specification<Todo>) (root, query, cb) -> {

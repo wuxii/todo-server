@@ -45,6 +45,17 @@ public class Options {
         );
     }
 
+    public static ActionOptions doneAction() {
+        return new ActionOptions(
+                "done",
+                "完成待办",
+                new org.apache.commons.cli.Options()
+                        .addOption(ID_OPTION),
+                "finish"
+        );
+    }
+
+
     private static final Option TITLE_OPTION = newOption("t").hasArg().argName("title").longOpt("title").desc("待办标题").build();
     private static final Option SIZE_OPTION = newOption().hasArg().argName("5").longOpt("size").desc("获取的数据量大小").build();
     private static final Option DEADLINE_OPTION = newOption().hasArg().argName("2020-02-02 | 2020-02-02 02:02:02").longOpt("deadline").desc("待办的截止时间").build();

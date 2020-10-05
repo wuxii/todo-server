@@ -23,6 +23,10 @@ public class DingtalkResponse {
                 .setText(new DingtalkResponseText().setContent(text));
     }
 
+    public static DingtalkResponse actionCard() {
+        return new DingtalkResponse().setMsgtype("actionCard");
+    }
+
     private String msgtype;
     private DingtalkResponseText text;
     private DingtalkResponseMarkdown markdown;

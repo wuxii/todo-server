@@ -28,7 +28,8 @@ public class DingtalkOptions implements Iterable<ActionOptions> {
     }
 
     public ActionOptions findOptions(String command) {
-        return findOptions(e -> command.startsWith(e.getKey()));
+        String trimmedCommand = command.trim();
+        return findOptions(e -> trimmedCommand.startsWith(e.getKey()));
     }
 
     public ActionOptions findOptions(Predicate<Entry<String, ActionOptions>> predicate) {

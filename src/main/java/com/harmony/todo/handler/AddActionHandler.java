@@ -2,7 +2,6 @@ package com.harmony.todo.handler;
 
 import com.harmony.todo.dingtalk.DingtalkAction;
 import com.harmony.todo.dingtalk.DingtalkResponse;
-import com.harmony.todo.dingtalk.DingtalkResponse.DingtalkResponseActionCardButton;
 import com.harmony.todo.dingtalk.DingtalkResponse.DingtalkResponseMarkdown;
 import com.harmony.todo.domain.Todo;
 import com.harmony.todo.domain.User;
@@ -10,9 +9,6 @@ import com.harmony.todo.service.TodoService;
 import com.harmony.todo.service.UserService;
 import com.harmony.todo.utils.DateFormatter;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 public class AddActionHandler extends AbstractActionHandler {
@@ -50,9 +46,9 @@ public class AddActionHandler extends AbstractActionHandler {
 
     private DingtalkResponse buildDingtalkResponse(Todo todo) {
         String title = "#" + todo.getShortId() + " " + todo.getTitle();
-        String message = "## " + title + "\n\n\t" + todo.getMessage();
+        String message = "### " + title + "\n\t" + todo.getMessage();
         DingtalkResponseMarkdown markdown = new DingtalkResponseMarkdown()
-                .setText(title)
+                .setTitle(title)
                 .setText(message);
         return DingtalkResponse
                 .markdown()

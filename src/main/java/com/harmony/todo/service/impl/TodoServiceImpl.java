@@ -16,10 +16,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Selection;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -52,7 +50,7 @@ public class TodoServiceImpl extends ServiceSupport<Todo> implements TodoService
         String lockKey = String.format(LockKeys.PATTERN_OF_TODO_NEXT_SHORT_ID, userId);
         return lockRegistry
                 .obtainExecutableLock(lockKey)
-                .execute(() -> findUserMaxTodoShortIdBy(userId));
+                .execute(() -> findUserMaxTodoShortIdBy(userId) + 1);
     }
 
     @Override
@@ -67,16 +65,7 @@ public class TodoServiceImpl extends ServiceSupport<Todo> implements TodoService
     }
 
     private long findUserMaxTodoShortIdBy(Long userId) {
-        return todoRepository
-                .findOne((Specification<Todo>) (root, query, cb) -> {
-                    Path<Long> userIdPath = root.get("userId");
-                    Path<Long> shortIdPath = root.get("shortId");
-                    Expression<Long> maxShortIdFunction = cb.function("max", Long.class, shortIdPath);
-                    query.select((Selection) maxShortIdFunction);
-                    return cb.equal(userIdPath, userId);
-                })
-                .map(Todo::getShortId)
-                .orElse(0L);
+        return todoRepository.findUserMaxTodoShortIdBy(userId).orElse(0L);
     }
 
     private Specification<Todo> conditionOf(TodoListRequest request) {
